@@ -16,6 +16,10 @@ class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef'
         content => join([inline_template('<%= scope["::dcache::admin_ssh_keys"].join("\n") %>'), "\n"], ''),
         before  => Class['dcache::poolmanager']
       }
+    } else {
+      if $::dcache::ssh_authorized_keys != 'nodef' {
+        class { 'dcache::authorized_keys2':; }
+      }
     }
   }
 

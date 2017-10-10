@@ -13,6 +13,7 @@ class dcache (
   $pools_setup           = 'nodef',
   $poolmanager_conf      = 'nodef',
   $gplazma_conf          = 'nodef',
+  $ssh_authorized_keys   = 'nodef',
   $poolmanager_conf_path = '/var/lib/dcache/config/poolmanager.conf',
   $dcache_layout         = "${dcache_etc_dir}/layouts/${hostname}.conf",
   $gplazma_conf_path     = "${dcache_etc_dir}/gplazma.conf",
