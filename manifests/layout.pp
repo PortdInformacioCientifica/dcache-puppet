@@ -1,9 +1,5 @@
 class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef', $p_setup = 'nodef',) {
 
-  if $::dcache::ssh_authorized_keys != 'nodef' {
-    class { 'dcache::authorized_keys2':; }
-  }
-
   if is_hash($layout_hash) {
     if deep_has_key($layout_hash, 'dCacheDomain') {
       class { 'dcache::poolmanager': }

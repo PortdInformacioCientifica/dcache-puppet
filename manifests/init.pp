@@ -45,4 +45,9 @@ class dcache (
   } ->
   anchor { 'dcache::end': }
 
+  # Optional configurations
+  if $::dcache::ssh_authorized_keys != 'nodef' {
+    class { 'dcache::authorized_keys2':; }
+  }
+
 }
