@@ -1,4 +1,9 @@
 class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef', $p_setup = 'nodef',) {
+
+  if $::dcache::ssh_authorized_keys != 'nodef' {
+    class { 'dcache::authorized_keys2':; }
+  }
+
   if is_hash($layout_hash) {
     if deep_has_key($layout_hash, 'dCacheDomain') {
       class { 'dcache::poolmanager': }
@@ -15,10 +20,6 @@ class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef'
         mode    => '0644',
         content => join([inline_template('<%= scope["::dcache::admin_ssh_keys"].join("\n") %>'), "\n"], ''),
         before  => Class['dcache::poolmanager']
-      }
-    } else {
-      if $::dcache::ssh_authorized_keys != 'nodef' {
-        class { 'dcache::authorized_keys2':; }
       }
     }
   }
