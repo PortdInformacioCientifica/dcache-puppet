@@ -3,7 +3,6 @@ class dcache::authorized_keys2() {
         ensure  => 'present',
         type    => 'ssh-rsa',
         user    => $dcache::dcacheuser,
-        group   => $dcache::dcachegroup,
         target  => $dcache::authorized_keys2,
         options => 'from="*"',
       }
