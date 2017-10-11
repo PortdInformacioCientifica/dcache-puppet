@@ -1,3 +1,6 @@
+# dcache::services:poolmanager
+#  |- Add here configurations for the 'poolmanager' service
+
 class dcache::services::poolmanager (
   $poolmanager_conf_path = $::dcache::poolmanager_conf_path,
   $poolmanager_conf      = $::dcache::poolmanager_conf,) {

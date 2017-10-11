@@ -1,3 +1,6 @@
+# dcache::services:gplazma
+#  |- Add here configurations for the 'gplazma' service
+
 class dcache::services:gplazma ($gplazma_conf_path = $::dcache::gplazma_conf_path, $gplazma_conf = $::dcache::gplazma_conf,) {
   if ($gplazma_conf != 'nodef') {
     file { "${gplazma_conf_path}.puppet":
