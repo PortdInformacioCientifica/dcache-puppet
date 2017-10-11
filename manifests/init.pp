@@ -24,9 +24,9 @@ class dcache (
   $service_pnfsmanager   = 'false',
   $service_nfs           = 'false',
   # Directories
-  $path_authorized_keys2 = "${dcache_etc_dir}/admin/authorized_keys2",
-  $path_dcache_layout    = "${dcache_etc_dir}/layouts/${hostname}.conf",
-  $path_gplazma_conf     = "${dcache_etc_dir}/gplazma.conf",
+  $path_authorized_keys2 = "$dcache::dcache_etc_dir/admin/authorized_keys2",
+  $path_dcache_layout    = "$dcache::dcache_etc_dir/layouts/${hostname}.conf",
+  $path_gplazma_conf     = "$dcache::dcache_etc_dir/gplazma.conf",
   $path_poolmanager_conf = '/var/lib/dcache/config/poolmanager.conf',
   $lock_version          = false,
   $service_ensure        = 'running'
