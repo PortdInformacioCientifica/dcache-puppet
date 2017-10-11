@@ -1,5 +1,5 @@
 # Private class generates poolmanager.conf
-class dcache::poolmanager (
+class dcache::cell::poolmanager (
   $poolmanager_conf_path = $::dcache::poolmanager_conf_path,
   $poolmanager_conf      = $::dcache::poolmanager_conf,) {
   if ($poolmanager_conf != 'nodef') {

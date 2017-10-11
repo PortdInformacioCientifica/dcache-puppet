@@ -2,7 +2,7 @@ class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef'
 
   if is_hash($layout_hash) {
     if deep_has_key($layout_hash, 'dCacheDomain') {
-      class { 'dcache::poolmanager': }
+      class { 'dcache::cell::poolmanager': }
     }
 
     if deep_has_key($layout_hash, 'gplazma') {
@@ -15,7 +15,7 @@ class dcache::layout ($l_file = $::dcache::dcache_layout, $layout_hash = 'nodef'
         group   => $dcache::dcachegroup,
         mode    => '0644',
         content => join([inline_template('<%= scope["::dcache::admin_ssh_keys"].join("\n") %>'), "\n"], ''),
-        before  => Class['dcache::poolmanager']
+        before  => Class['dcache::cell::poolmanager']
       }
     }
   }

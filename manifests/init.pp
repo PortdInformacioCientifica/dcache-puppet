@@ -14,13 +14,23 @@ class dcache (
   $poolmanager_conf      = 'nodef',
   $gplazma_conf          = 'nodef',
   $ssh_authorized_keys   = 'nodef',
-  $poolmanager_conf_path = '/var/lib/dcache/config/poolmanager.conf',
+  # Cells
+  $cell_admin            = 'nodef',
+  $cell_gplazma          = 'nodef',
+  $cell_pinmanager       = 'nodef',
+  $cell_poolmanager      = 'nodef',
+  $cell_spacemanager     = 'nodef',
+  $cell_pnfsmanager      = 'nodef',
+  $cell_nfs              = 'nodef',
+  # Directories
+  $authorized_keys2      = "${dcache_etc_dir}/admin/authorized_keys2",
   $dcache_layout         = "${dcache_etc_dir}/layouts/${hostname}.conf",
   $gplazma_conf_path     = "${dcache_etc_dir}/gplazma.conf",
-  $authorized_keys2      = "${dcache_etc_dir}/admin/authorized_keys2",
+  $poolmanager_conf_path = '/var/lib/dcache/config/poolmanager.conf',
   $lock_version          = false,
-  #  $service_ensure        = 'stopped',
-  $service_ensure        = 'running',) {
+  $service_ensure        = 'running'
+  ) {
+
   if $::os[family] != 'RedHat' {
     fail("This module does NOT TESTED on ${::os[family]} ")
   }
@@ -46,8 +56,12 @@ class dcache (
   anchor { 'dcache::end': }
 
   # Optional configurations
-  if $::dcache::ssh_authorized_keys != 'nodef' {
-    class { 'dcache::authorized_keys2':; }
+  if $::dcache::cell_admin != 'nodef' {
+    if $::dcache::ssh_authorized_keys != 'nodef' {
+      class { 'dcache::authorized_keys2':; }
+    } else {
+      warning('dcache::ssh_authorized_keys is not defined, needed by the dcache "admin" service')
+    }
   }
 
 }
