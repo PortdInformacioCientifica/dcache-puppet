@@ -15,18 +15,18 @@ class dcache (
   $gplazma_conf          = 'nodef',
   $ssh_authorized_keys   = 'nodef',
   # Cells
-  $service_admin            = 'nodef',
-  $service_gplazma          = 'nodef',
-  $service_pinmanager       = 'nodef',
-  $service_poolmanager      = 'nodef',
-  $service_spacemanager     = 'nodef',
-  $service_pnfsmanager      = 'nodef',
-  $service_nfs              = 'nodef',
+  $service_admin         = 'false',
+  $service_gplazma       = 'false',
+  $service_pinmanager    = 'false',
+  $service_poolmanager   = 'false',
+  $service_spacemanager  = 'false',
+  $service_pnfsmanager   = 'false',
+  $service_nfs           = 'false',
   # Directories
-  $authorized_keys2      = "${dcache_etc_dir}/admin/authorized_keys2",
-  $dcache_layout         = "${dcache_etc_dir}/layouts/${hostname}.conf",
-  $gplazma_conf_path     = "${dcache_etc_dir}/gplazma.conf",
-  $poolmanager_conf_path = '/var/lib/dcache/config/poolmanager.conf',
+  $path_authorized_keys2 = "${dcache_etc_dir}/admin/authorized_keys2",
+  $path_dcache_layout    = "${dcache_etc_dir}/layouts/${hostname}.conf",
+  $path_gplazma_conf     = "${dcache_etc_dir}/gplazma.conf",
+  $path_poolmanager_conf = '/var/lib/dcache/config/poolmanager.conf',
   $lock_version          = false,
   $service_ensure        = 'running'
   ) {
@@ -55,13 +55,9 @@ class dcache (
   } ->
   anchor { 'dcache::end': }
 
-  # Optional configurations
-  if $::dcache::service_admin != 'nodef' {
-    if $::dcache::ssh_authorized_keys != 'nodef' {
-      class { 'dcache::authorized_keys2':; }
-    } else {
-      warning('dcache::ssh_authorized_keys is not defined, needed by the dcache "admin" service')
-    }
+  # dCache service configuration
+  if $::dcache::service_admin == 'true' {
+    class { "dcache::services::admin":; }
   }
 
 }

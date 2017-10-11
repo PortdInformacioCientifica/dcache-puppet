@@ -2,7 +2,7 @@
 #  |- Add here configurations for the 'poolmanager' service
 
 class dcache::services::poolmanager (
-  $poolmanager_conf_path = $::dcache::poolmanager_conf_path,
+  $path_poolmanager_conf = $::dcache::path_poolmanager_conf,
   $poolmanager_conf      = $::dcache::poolmanager_conf,) {
     # Private class generates poolmanager.conf
   if ($poolmanager_conf != 'nodef') {
@@ -33,7 +33,7 @@ class dcache::services::poolmanager (
       $content = template('dcache/poolmanager.conf.erb')
     }
 
-    file { "${poolmanager_conf_path}.puppet":
+    file { "${path_poolmanager_conf}.puppet":
       owner   => $::dcache::dcacheuser,
       group   => $::dcache::dcachegroup,
       mode    => '0644',
@@ -43,13 +43,13 @@ class dcache::services::poolmanager (
     }
 
     exec { "save_custom_pm":
-      command => "/bin/cp -f ${poolmanager_conf_path} ${poolmanager_conf_path}.puppet;/bin/cp -f ${poolmanager_conf_path} ${poolmanager_conf_path}.puppet.save  ",
-      onlyif  => "/usr/bin/test ${poolmanager_conf_path} -nt ${poolmanager_conf_path}.puppet",
+      command => "/bin/cp -f ${path_poolmanager_conf} ${path_poolmanager_conf}.puppet;/bin/cp -f ${path_poolmanager_conf} ${path_poolmanager_conf}.puppet.save  ",
+      onlyif  => "/usr/bin/test ${path_poolmanager_conf} -nt ${path_poolmanager_conf}.puppet",
       path    => $::path
     }
 
     exec { 'reload_pm':
-      command     => "cp -p  ${poolmanager_conf_path}.puppet ${poolmanager_conf_path}",
+      command     => "cp -p  ${path_poolmanager_conf}.puppet ${path_poolmanager_conf}",
       refreshonly => true,
       #      onlyif      => "dcache status",
       path        => $::path,

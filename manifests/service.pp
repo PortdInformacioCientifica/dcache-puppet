@@ -56,7 +56,7 @@ class dcache::service {
   }
 
   exec { 'dcache-refresh_layuot':
-    command     => "cp -p  ${::dcache::dcache_layout}.puppet ${::dcache::dcache_layout}; touch ${::dcache::dcache_layout}",
+    command     => "cp -p  ${::dcache::path_dcache_layout}.puppet ${::dcache::path_dcache_layout}; touch ${::dcache::path_dcache_layout}",
     refreshonly => true,
     path        => ['/usr/sbin', '/usr/bin', '/sbin', '/bin/'],
     logoutput   => false,
