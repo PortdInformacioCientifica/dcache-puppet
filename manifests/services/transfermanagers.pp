@@ -1,0 +1,3 @@
+class { "dcache::services:transfermanagers":
+
+}
