@@ -15,13 +15,13 @@ class dcache (
   $gplazma_conf          = 'nodef',
   $ssh_authorized_keys   = 'nodef',
   # Cells
-  $cell_admin            = 'nodef',
-  $cell_gplazma          = 'nodef',
-  $cell_pinmanager       = 'nodef',
-  $cell_poolmanager      = 'nodef',
-  $cell_spacemanager     = 'nodef',
-  $cell_pnfsmanager      = 'nodef',
-  $cell_nfs              = 'nodef',
+  $service_admin            = 'nodef',
+  $service_gplazma          = 'nodef',
+  $service_pinmanager       = 'nodef',
+  $service_poolmanager      = 'nodef',
+  $service_spacemanager     = 'nodef',
+  $service_pnfsmanager      = 'nodef',
+  $service_nfs              = 'nodef',
   # Directories
   $authorized_keys2      = "${dcache_etc_dir}/admin/authorized_keys2",
   $dcache_layout         = "${dcache_etc_dir}/layouts/${hostname}.conf",
@@ -56,7 +56,7 @@ class dcache (
   anchor { 'dcache::end': }
 
   # Optional configurations
-  if $::dcache::cell_admin != 'nodef' {
+  if $::dcache::service_admin != 'nodef' {
     if $::dcache::ssh_authorized_keys != 'nodef' {
       class { 'dcache::authorized_keys2':; }
     } else {
