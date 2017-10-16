@@ -39,7 +39,6 @@
 <% end -%>
 <% d_value.sort.each do |cell_name,cell_value| -%>
 <% if cell_name!= "domainsettings" and cell_name!= "comments" -%>
-# Cell: <%= cell_name %>
 [<%= d_name %>/<%= cell_name %>]
 <% if cell_value.is_a?(Hash) -%>
 <% cell_value.sort.each do |cp_name,cp_value| -%>
