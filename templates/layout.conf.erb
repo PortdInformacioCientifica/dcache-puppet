@@ -20,6 +20,8 @@
 ######################################################################
 <% @layout_hash['domains'].sort.each do |d_name,d_value| -%>
 <% d_name= d_name+"-${host.name}Domain" %>
+############################################
+# Domain: <%= d_name %>
 [<%= d_name %>]
 <% if !d_value['comments'].nil? -%>
 <% d_value['comments'].each do |comment| -%>
@@ -33,6 +35,7 @@
 <% end -%>
 <% d_value.sort.each do |cell_name,cell_value| -%>
 <% if cell_name!= "domainsettings" and cell_name!= "comments" -%>
+# Cell: <%= cell_name %>
 [<%= d_name %>/<%= cell_name %>]
 <% if cell_value.is_a?(Hash) -%>
 <% cell_value.sort.each do |cp_name,cp_value| -%>
@@ -41,4 +44,6 @@
 <% end -%>
 <% end -%>
 <% end -%>
+## End <%= d_name %>
+############################################
 <% end -%>
