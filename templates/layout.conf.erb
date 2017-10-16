@@ -19,6 +19,10 @@
 ## Domain layout settings
 ######################################################################
 <% @layout_hash['domains'].sort.each do |d_name,d_value| -%>
+<%# ####################################################### -%>
+<%# FOR THOSE SITES WITH AN EXISTING DCACHE INSTANCE: -%>
+<%#   * MODIFY 'd_name' ACCORDING TO THE DOMAIN NAME FORMAT -%>
+<%# ####################################################### -%>
 <% d_name= d_name+"-${host.name}Domain" %>
 ############################################
 # Domain: <%= d_name %>
