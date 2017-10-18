@@ -20,6 +20,5 @@ class dcache::services::gplazma (
       onlyif  => "/usr/bin/test ${path_gplazma_conf} -nt ${path_gplazma_conf}.puppet",
       path    => $::path
     }
-
   }
 }
