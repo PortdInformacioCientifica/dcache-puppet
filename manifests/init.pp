@@ -61,4 +61,8 @@ class dcache (
     class { "dcache::services::admin":; }
   }
 
+  # dCache service configuration
+  if $::dcache::service_gplazma == 'true' {
+    class { "dcache::services::gplazma":; }
+  }
 }
