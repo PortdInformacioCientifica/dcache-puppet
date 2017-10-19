@@ -15,6 +15,7 @@ class dcache (
   $gplazma_conf           = 'nodef',
   $poolmamanger_conf_type = 'nodef',
   $ssh_authorized_keys    = 'nodef',
+
   # Cells
   $auto_configuration     = 'false',
   $service_admin          = 'false',
