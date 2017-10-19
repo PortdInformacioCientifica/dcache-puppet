@@ -4,7 +4,9 @@
 class dcache::services::poolmanager (
   $path_poolmanager_conf = $::dcache::path_poolmanager_conf,
   $poolmanager_conf_type = $::dcache::poolmanager_conf_type,
-  $poolmanager_conf      = $::dcache::poolmanager_conf
+  $poolmanager_conf      = $::dcache::poolmanager_conf,
+  $path_srm22            = $::dcache::path_srm22,
+  $srm22_filename        = $::dcache::$srm22_filename
 ) {
     # Private class generates poolmanager.conf
   if ($poolmanager_conf != 'nodef') {
@@ -65,7 +67,36 @@ class dcache::services::poolmanager (
     }
     if ($poolmanager_conf_type == 'srm22') {
       notice("This is a srm22 config")
-
+      file {
+        "$path_srm22":
+          ensure => 'directory',
+          mode   => '0755',
+          owner  => 'root',
+          group  => 'root'
+        "$path_srm22/historic":
+          ensure => 'directory',
+          mode   => '0755',
+          owner  => 'root',
+          group  => 'root'
+        "$path_srm22/LinkGroupAuthorization.xsl":
+          ensure => 'present',
+          mode   => '0644',
+          owner  => 'root',
+          group  => 'root',
+          source => 'puppet:///modules/dcache/common/root/srm22/LinkGroupAuthorization.xsl'
+        "$path_srm22/poolmanagerconfig.xsl":,
+          ensure => 'present',
+          mode   => '0644',
+          owner  => 'root',
+          group  => 'root',
+          source => 'puppet:///modules/dcache/common/root/srm22/poolmanagerconfig.xsl'
+        "$path_srm22/$srm22_filename":
+          ensure => 'present',
+          mode   => '0644',
+          owner  => 'root',
+          group  => 'root',
+          source => "puppet:///modules/dcache/common/root/srm22/srm22.xml"
+      }
     }
   } 
 }
