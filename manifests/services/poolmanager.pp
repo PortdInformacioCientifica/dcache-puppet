@@ -2,17 +2,16 @@
 #  |- Add here configurations for the 'poolmanager' service
 
 class dcache::services::poolmanager (
-  $path_poolmanager_conf = $::dcache::path_poolmanager_conf,
-  $poolmanager_conf_type = $::dcache::poolmanager_conf_type,
-  $poolmanager_conf      = $::dcache::poolmanager_conf,
+  $poolmanager_conf = '/var/lib/dcache/config/poolmanager.conf',
+  $poolmanager_type = 'nodef'
 ) {
     # Private class generates poolmanager.conf
   if ($poolmanager_conf != 'nodef') {
-    if ($poolmanager_conf_type != 'nodef' and $poolmanager_conf_type != 'srm22') {
-      crit("'$poolmanager_conf_type' with incorrect value. Should be 'nodef' or 'srm22'")
+    if ($poolmanager_type != 'nodef' and $poolmanager_type != 'srm22') {
+      crit("'$poolmanager_type' with incorrect value. Should be 'nodef' or 'srm22'")
     }
 
-    if ($poolmanager_conf_type == 'nodef') {
+    if ($poolmanager_type == 'nodef') {
       #  dump poolmamager as multiline string : e.g.
       #  poolmanager_cfg: |
       #    cm set debug off
@@ -40,7 +39,7 @@ class dcache::services::poolmanager (
         $content = template('dcache/poolmanager.conf.erb')
       }
   
-      file { "${path_poolmanager_conf}.puppet":
+      file { "${poolmanager_conf}.puppet":
         owner   => $::dcache::dcacheuser,
         group   => $::dcache::dcachegroup,
         mode    => '0644',
@@ -50,20 +49,20 @@ class dcache::services::poolmanager (
       }
   
       exec { "save_custom_pm":
-        command => "/bin/cp -f ${path_poolmanager_conf} ${path_poolmanager_conf}.puppet;/bin/cp -f ${path_poolmanager_conf} ${path_poolmanager_conf}.puppet.save  ",
-        onlyif  => "/usr/bin/test ${path_poolmanager_conf} -nt ${path_poolmanager_conf}.puppet",
+        command => "/bin/cp -f ${poolmanager_conf} ${poolmanager_conf}.puppet;/bin/cp -f ${poolmanager_conf} ${poolmanager_conf}.puppet.save  ",
+        onlyif  => "/usr/bin/test ${poolmanager_conf} -nt ${poolmanager_conf}.puppet",
         path    => $::path
       }
   
       exec { 'reload_pm':
-        command     => "cp -p  ${path_poolmanager_conf}.puppet ${path_poolmanager_conf}",
+        command     => "cp -p  ${poolmanager_conf}.puppet ${poolmanager_conf}",
         refreshonly => true,
         #      onlyif      => "dcache status",
         path        => $::path,
         logoutput   => false,
       }
     }
-    if ($poolmanager_conf_type == 'srm22') {
+    if ($poolmanager_type == 'srm22') {
       notice("This is a srm22 config. Puppet code needs to be deployed.")
       # This module actually is managed outside the dCache puppet module
       # SRM22 is a XSL/XML based script to generate poolmamanger.conf and Linkgroups.conf

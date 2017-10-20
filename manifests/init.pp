@@ -11,20 +11,10 @@ class dcache (
   $admin_ssh_keys         = 'nodef',
   $layout                 = 'nodef',
   $pools_setup            = 'nodef',
-  $poolmanager_conf       = 'nodef',
-  $gplazma_conf           = 'nodef',
-  $poolmamanger_conf_type = 'nodef',
   $ssh_authorized_keys    = 'nodef',
 
   # Cells
   $auto_configuration     = 'false',
-  $service_admin          = 'false',
-  $service_gplazma        = 'false',
-  $service_pinmanager     = 'false',
-  $service_poolmanager    = 'false',
-  $service_spacemanager   = 'false',
-  $service_pnfsmanager    = 'false',
-  $service_nfs            = 'false',
   # Directories
   $path_authorized_keys2  = "$dcache::dcache_etc_dir/admin/authorized_keys2",
   $path_dcache_layout     = "$dcache::dcache_etc_dir/layouts/${hostname}.conf",
@@ -57,19 +47,4 @@ class dcache (
     require => Class['dcache::layout'],
   } ->
   anchor { 'dcache::end': }
-
-  # dCache service configuration
-  if $::dcache::service_admin == 'true' {
-    class { "dcache::services::admin":; }
-  }
-
-  # dCache service configuration
-  if $::dcache::service_gplazma == 'true' {
-    class { "dcache::services::gplazma":; }
-  }
-
-  # dCache service configuration
-  if $::dcache::service_poolmanager == 'true' {
-    class { "dcache::services::poolmanager":; }
-  }
 }

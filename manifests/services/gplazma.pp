@@ -3,7 +3,7 @@
 
 class dcache::services::gplazma (
   $path_gplazma_conf = $::dcache::path_gplazma_conf,
-  $gplazma_conf      = $::dcache::gplazma_conf
+  $gplazma_conf      = 'nodef'
 ) {
 
   if ($gplazma_conf != 'nodef') {
